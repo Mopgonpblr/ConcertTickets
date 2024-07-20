@@ -5,7 +5,7 @@ import java.time.ZoneId;
 public class Ticket {
     private String id;
     private String hall;
-    private String code;
+    private int code;
     private long time;
     private boolean isPromo;
     private char sector;
@@ -61,17 +61,13 @@ public class Ticket {
         }
     }
 
-    public String getCode() {
+    public int getCode() {
         return code;
     }
 
     public void setCode(int code) {
         if (code >= 100 && code <= 999) {
-            this.code = "" + code;
-        } else if (code >= 10 && code <= 99) {
-            this.code = "0" + code;
-        } else if (code >= 0 && code <= 9) {
-            this.code = "00" + code;
+            this.code = code;
         } else {
             throw new IllegalArgumentException("The code should be a 3 digit number");
         }
