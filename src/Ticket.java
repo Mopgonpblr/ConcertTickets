@@ -1,6 +1,7 @@
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.Random;
 
 public class Ticket {
     private String id;
@@ -9,75 +10,50 @@ public class Ticket {
     private long time;
     private boolean isPromo;
     private char sector;
-    private double maxWeight;
+    private String maxWeight;
     private String price;
-    private final LocalDateTime creationTime;
+    private final LocalDateTime CREATION_TIME;
 
-    public Ticket(String id, String hall, int code, LocalDateTime time, boolean isPromo, char sector,
+    public Ticket(String hall, int code, LocalDateTime time, boolean isPromo, char sector,
                   double maxWeight, double price) {
-        this();
-        this.setId(id);
-        this.setHall(hall);
-        this.setCode(code);
-        this.setTime(time);
-        this.setPromo(isPromo);
-        this.setSector(sector);
-        this.setMaxWeight(maxWeight);
-        this.setPrice(price);
+        this(hall, code, time);
+
+        this.isPromo = isPromo;
+
+        if ((sector >= 'A') && (sector <= 'C')) {
+            this.sector = sector;
+        } else {
+            throw new IllegalArgumentException("The sector name can only have values from 'A' to 'C'");
+        }
+
+        if (maxWeight >= 0) {
+            this.maxWeight = String.format("%.3f", maxWeight);
+        } else {
+            throw new IllegalArgumentException("The max weight variable can't have negative value");
+        }
+
+        if (price >= 0) {
+            this.price = String.format("%.2f", price);
+        } else {
+            throw new IllegalArgumentException("The price variable can't have negative value");
+        }
+
     }
 
     public Ticket(String hall, int code, LocalDateTime time) {
         this();
-        this.setHall(hall);
-        this.setCode(code);
-        this.setTime(time);
-    }
-
-    public Ticket() {
-        this.creationTime = LocalDateTime.now();
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        if (id.length() <= 4) {
-            this.id = id;
-        } else {
-            throw new IllegalArgumentException("The ID should be 4 digits and/or chars max");
-        }
-    }
-
-    public String getHall() {
-        return hall;
-    }
-
-    public void setHall(String hall) {
+        this.id = generateId();
         if (hall.length() <= 10) {
             this.hall = hall;
         } else {
             throw new IllegalArgumentException("The hall name should be 10 chars max");
         }
-    }
 
-    public int getCode() {
-        return code;
-    }
-
-    public void setCode(int code) {
-        if (code >= 100 && code <= 999) {
+        if ((code >= 100) && (code <= 999)) {
             this.code = code;
         } else {
             throw new IllegalArgumentException("The code should be a 3 digit number");
         }
-    }
-
-    public long getTime() {
-        return time;
-    }
-
-    public void setTime(LocalDateTime time) {
         /*
         The new Date Time API from Java 8 provides the LocalDate and Instant classes to manipulate date and time.
         We can get the current Unix time by invoking getEpochSecond() on the Instant object:
@@ -86,47 +62,20 @@ public class Ticket {
         this.time = instant.getEpochSecond();
     }
 
-    public boolean isPromo() {
-        return isPromo;
+    public Ticket() {
+        this.CREATION_TIME = LocalDateTime.now();
     }
 
-    public void setPromo(boolean promo) {
-        isPromo = promo;
-    }
-
-    public char getSector() {
-        return sector;
-    }
-
-    public void setSector(char sector) {
-        switch (sector) {
-            case 'A':
-            case 'B':
-            case 'C':
-                this.sector = sector;
-                break;
-            default:
-                throw new IllegalArgumentException("The sector name can only have 'A','B' and 'C' values");
+    private String generateId() {
+        StringBuilder newId = new StringBuilder();
+        Random random = new Random();
+        String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        for (int i = 0; i < 4; i++) {
+            newId.append(characters.charAt(random.nextInt(characters.length())));
         }
+        return newId.toString();
     }
 
-    public double getMaxWeight() {
-        return maxWeight;
-    }
-
-    public void setMaxWeight(double maxWeight) {
-        int temp = (int) (maxWeight * 1000); //limits the value to kilograms and grams
-        this.maxWeight = (double) temp / 1000;
-    }
-
-    public String getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        int temp = (int) (price * 100); //limits the value to dollars and cents
-        this.price = "$" + (double) temp / 100;
-    }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
@@ -138,7 +87,7 @@ public class Ticket {
                 append("\nStadium Sector: ").append(this.sector).
                 append("\nMax allowed backpack weight (kg): ").append(this.maxWeight).
                 append("\nPrice: ").append(this.price).
-                append("\nTicket Creation Time: ").append(this.creationTime).append("\n");
+                append("\nTicket Creation Time: ").append(this.CREATION_TIME).append("\n");
         return sb.toString();
     }
 }
