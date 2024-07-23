@@ -77,7 +77,13 @@ public class Ticket {
         }
         return newId.toString();
     }
+    public String getId(){
+        return this.id;
+    }
 
+    public char getSector(){
+        return this.sector;
+    }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
