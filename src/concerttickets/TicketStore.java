@@ -13,4 +13,12 @@ public class TicketStore {
         System.out.println("The tickets store is full");
     }
 
+    public Ticket getTicket(String id){
+        for (Ticket ticket: tickets){
+            if (ticket.getId().equals(id)){
+                return ticket;
+            }
+        }
+        return null;
+    }
 }
