@@ -1,9 +1,3 @@
-/**
- * clone + Cloneable
- * <p>
- * static count++ for ID
- */
-
 package concerttickets;
 
 import concerttickets.models.contactservices.Email;

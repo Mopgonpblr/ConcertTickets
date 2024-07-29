@@ -9,7 +9,6 @@ import java.math.RoundingMode;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-//import java.util.Random;
 
 public class Ticket extends Template {
     private String hall;
@@ -21,7 +20,7 @@ public class Ticket extends Template {
     private BigDecimal price;
 
     private LocalDateTime creationDate;
-    static int lastId = 1000;
+    static int lastId = 0;
 
 
     public Ticket(String hall, int code, LocalDateTime time, boolean isPromo, Sector sector,
@@ -38,17 +37,7 @@ public class Ticket extends Template {
 
     }
 
-    /*
-    private int generateId() {
-        StringBuilder newId = new StringBuilder();
-        Random random = new Random();
-        String characters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-        for (int i = 0; i < 4; i++) {
-            newId.append(characters.charAt(random.nextInt(characters.length())));
-        }
-        return newId.toString();
-    }
-    */
+
     private void createLimitedTicket(String hall, int code, LocalDateTime time) {
         this.setId(Ticket.lastId++);
 
@@ -137,7 +126,7 @@ public class Ticket extends Template {
         return this.sector;
     }
 
-    public BigDecimal maxWeight() {
+    public BigDecimal getMaxWeight() {
         return this.maxWeight;
     }
 
