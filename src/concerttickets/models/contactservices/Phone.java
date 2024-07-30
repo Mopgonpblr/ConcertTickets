@@ -47,7 +47,42 @@ public class Phone extends Template {
             throw new IllegalArgumentException("The number should consist of 7 or 8 digits");
         }
     }
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (this.hashCode() != object.hashCode()) {
+            return false;
+        }
 
+        if (object == null || this.getClass() != object.getClass()) {
+            return false;
+        }
+        Phone phone = (Phone) object;
+        if (this.getId() != phone.getId()){
+            return false;
+        }
+        if (this.countryCode != phone.countryCode) {
+            return false;
+        }
+        if (this.areaCode != phone.areaCode) {
+            return false;
+        }
+        if (this.number != phone.number) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = this.getId();
+        result = 31 * result + this.countryCode;
+        result = 31 * result + this.areaCode;
+        result = 31 * result + this.number;
+        return result;
+    }
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

@@ -1,11 +1,13 @@
 package concerttickets.models.users;
 
 import concerttickets.models.Template;
+import concerttickets.models.contactservices.Email;
 import concerttickets.models.tickets.Ticket;
 
 public class Admin extends Template implements User {
 
     static int lastId = 0;
+    private final String ROLE = "Admin";
 
     public Admin() {
         this.setId(Admin.lastId++);
@@ -32,6 +34,37 @@ public class Admin extends Template implements User {
     }
 
     public void printRole() {
-        System.out.println("Admin");
+        System.out.println(this.ROLE);
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (this.hashCode() != object.hashCode()) {
+            return false;
+        }
+
+        if (object == null || this.getClass() != object.getClass()) {
+            return false;
+        }
+        Admin admin = (Admin) object;
+        if (this.getId() != admin.getId()) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = this.getId();
+        result = 31 * result + this.ROLE.hashCode();
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: "+ this.getId() + "\nRole: " + this.ROLE;
     }
 }

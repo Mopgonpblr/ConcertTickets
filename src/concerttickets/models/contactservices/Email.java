@@ -1,6 +1,7 @@
 package concerttickets.models.contactservices;
 
 import concerttickets.models.Template;
+import concerttickets.models.tickets.Ticket;
 
 public class Email extends Template {
     private final String login;
@@ -12,9 +13,43 @@ public class Email extends Template {
     }
 
     @Override
-    public void print(){
+    public void print() {
         System.out.println(this);
     }
+
+    @Override
+    public boolean equals(Object object) {
+        if (this == object) {
+            return true;
+        }
+        if (this.hashCode() != object.hashCode()) {
+            return false;
+        }
+
+        if (object == null || this.getClass() != object.getClass()) {
+            return false;
+        }
+        Email email = (Email) object;
+        if (this.getId() != email.getId()) {
+            return false;
+        }
+        if (!this.login.equals(email.login)) {
+            return false;
+        }
+        if (!this.service.equals(email.service)) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = this.getId();
+        result = 31 * result + this.login.hashCode();
+        result = 31 * result + this.service.hashCode();
+        return result;
+    }
+
     @Override
     public String toString() {
         return login + "@" + service;
