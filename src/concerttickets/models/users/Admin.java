@@ -10,7 +10,7 @@ public class Admin extends Template implements User {
     private final String ROLE = "Admin";
 
     public Admin() {
-        this.setId(Admin.lastId++);
+        this.setId(++Admin.lastId);
     }
 
     public boolean checkTicket(Ticket ticket) {
@@ -34,7 +34,14 @@ public class Admin extends Template implements User {
     }
 
     public void printRole() {
-        System.out.println(this.ROLE);
+        System.out.println("The role is: Admin");
+    }
+    @Override
+    public void print() {
+        System.out.println(this);
+    }
+    public void printDefault(){
+        super.print();
     }
 
     @Override

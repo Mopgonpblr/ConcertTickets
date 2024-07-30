@@ -39,7 +39,7 @@ public class Ticket extends Template {
 
 
     private void createLimitedTicket(String hall, int code, LocalDateTime time) {
-        this.setId(Ticket.lastId++);
+        this.setId(++Ticket.lastId);
 
         if (hall.length() <= 10) {
             this.hall = hall;
@@ -82,6 +82,10 @@ public class Ticket extends Template {
     @Override
     public void print() {
         System.out.println(this);
+    }
+
+    public void printDefault(){
+        super.print();
     }
 
     public void share(Phone phone) {

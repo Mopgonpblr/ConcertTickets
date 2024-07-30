@@ -13,7 +13,7 @@ public class Client extends Template implements User {
 
     public Client(Ticket ticket) {
         this.ticket = ticket;
-        this.setId(Client.lastId++);
+        this.setId(++Client.lastId);
     }
 
     public Ticket getTicket() {
@@ -21,7 +21,15 @@ public class Client extends Template implements User {
     }
 
     public void printRole() {
-        System.out.println(this.ROLE);
+        System.out.println("The role is: Client");
+    }
+
+    @Override
+    public void print() {
+        System.out.println(this);
+    }
+    public void printDefault(){
+        super.print();
     }
 
     @Override

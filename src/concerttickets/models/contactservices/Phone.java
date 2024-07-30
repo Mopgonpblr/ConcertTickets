@@ -3,13 +3,29 @@ package concerttickets.models.contactservices;
 import concerttickets.models.Template;
 
 public class Phone extends Template {
+    static int lastId = 0;
     private int countryCode;
     private int areaCode;
     private int number;
 
+    public Phone() {
+        this.setId(++Phone.lastId);
+    }
+
+    public Phone(int countryCode, int areaCode, int number) {
+        this();
+        this.countryCode = countryCode;
+        this.areaCode = areaCode;
+        this.number = number;
+    }
+
     @Override
-    public void print(){
+    public void print() {
         System.out.println(this);
+    }
+
+    public void printDefault() {
+        super.print();
     }
 
     public int getCountryCode() {
@@ -47,6 +63,7 @@ public class Phone extends Template {
             throw new IllegalArgumentException("The number should consist of 7 or 8 digits");
         }
     }
+
     @Override
     public boolean equals(Object object) {
         if (this == object) {
@@ -60,7 +77,7 @@ public class Phone extends Template {
             return false;
         }
         Phone phone = (Phone) object;
-        if (this.getId() != phone.getId()){
+        if (this.getId() != phone.getId()) {
             return false;
         }
         if (this.countryCode != phone.countryCode) {
@@ -83,6 +100,7 @@ public class Phone extends Template {
         result = 31 * result + this.number;
         return result;
     }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

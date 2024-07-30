@@ -6,12 +6,12 @@ import concerttickets.models.tickets.Sector;
 import concerttickets.models.tickets.Ticket;
 import concerttickets.models.users.Admin;
 import concerttickets.models.users.Client;
+import concerttickets.models.users.User;
 
 import java.time.LocalDateTime;
 
 public class TicketService {
     public static void main(String[] args) {
-        Admin admin = new Admin();
 
         Phone phone1 = new Phone();
         phone1.setCountryCode(375);
@@ -40,12 +40,17 @@ public class TicketService {
             System.out.println(fullTicket);
 
             fullTicket.share(phone1);
+            System.out.println();
 
-            Client client = new Client(fullTicket);
+            User admin = new Admin();
+            admin.printRole();
 
-            System.out.println("\nThe client's ticket:\n\n" + client.getTicket());
+            User client = new Client(fullTicket);
+            client.printRole();
 
-            System.out.println("The ticket is valid:" + admin.checkTicket(client.getTicket()));
+            System.out.println("\nThe client's ticket:\n\n" + ((Client)client).getTicket());
+
+            System.out.println("The ticket is valid:" + ((Admin)admin).checkTicket(((Client)client).getTicket()));
         } catch (IllegalArgumentException e) {
             System.out.println("Can't create the ticket: " + e.getMessage());
         }

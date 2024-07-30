@@ -1,13 +1,15 @@
 package concerttickets.models.contactservices;
 
 import concerttickets.models.Template;
-import concerttickets.models.tickets.Ticket;
+
 
 public class Email extends Template {
+    static int lastId = 0;
     private final String login;
     private final String service;
 
     public Email(String login, String service) {
+        this.setId(++Email.lastId);
         this.login = login;
         this.service = service;
     }
@@ -15,6 +17,10 @@ public class Email extends Template {
     @Override
     public void print() {
         System.out.println(this);
+    }
+
+    public void printDefault() {
+        super.print();
     }
 
     @Override
